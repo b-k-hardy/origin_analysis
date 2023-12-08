@@ -1,1 +1,6 @@
 *.mat
+*.sh
+*.P
+*.bin
+*.gz
+images*

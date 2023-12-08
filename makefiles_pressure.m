@@ -7,23 +7,19 @@
 %  Make sure to modify the hard-coded pointers below
 
 %% Code Max
-nums = (5:20:1025)';
+nums = (35:60:1025)';
 dir_fp   = 'fp/';
 dir_fpbs = 'fpbs/';
 dir_fsh  = 'fsh/';
 
-% rmdir(dir_fp,'s')
 mkdir(dir_fp)
-% rmdir(dir_fpbs,'s')
 mkdir(dir_fpbs)
-% rmdir(dir_fsh,'s')
 mkdir(dir_fsh)
 
-n_fsh = 13;
+n_fsh = 17;
 numd = reshape(nums, n_fsh, []); numd = numd';
 
 %% Loop over all numbers and make files
-
 for n=nums'
         
     ns = num2str(n);
@@ -41,28 +37,23 @@ for n=nums'
     fprintf(fid,'!DefTopology={TP1|../../../AAD/mesh-um13/UM13_model_0|LinBasis3D}\n');
     fprintf(fid,'\n');
     fprintf(fid,'!DefVariablePointer={Space|TP1|../../../AAD/try3/X-%s.D|3}\n',ns);
-    fprintf(fid,'!DefVariablePointer={Vel  |TP1|../../../AAD/try3/V-%s.D|3}\n',ns);
-    %fprintf(fid,'!DefVariablePointer={Pres |TP1|../../../AAD/try3/P-%s.D|1}\n',ns);
+    fprintf(fid,'!DefVariablePointer={Pres |TP1|../../../AAD/try3/P-%s.D|1}\n',ns);
     fprintf(fid,'\n');
-    %fprintf(fid,'!ImageVariables={Vel|Pres}\n');
-    %fprintf(fid,'!ImageVariables={Pres}\n');
-    fprintf(fid,'!ImageVariables={Vel}\n');
+    fprintf(fid,'!ImageVariables={Pres}\n');
     fprintf(fid,'\n');
+
     fprintf(fid,'!Resolution\n');
-
     fprintf(fid, '32 46 80\n');
-
     fprintf(fid,'\n');
+
     fprintf(fid,'!PixelDimension\n');
-
     fprintf(fid, '3.0 3.0 3.0\n');
-
     fprintf(fid,'\n');
+
     fprintf(fid,'!ImageOrigin\n');
-
     fprintf(fid,'-72 -52 -213\n');
-
     fprintf(fid,'\n');
+
     fclose(fid);
     
     % Make pbs file
@@ -95,24 +86,7 @@ for n=1:size(numd,1)
     fprintf(fid,'done\n');
     fprintf(fid,'\n');
     
-    %if mod(n-1,4) == 0
-    %    fid = fopen([dir_fsh 'main' num2str(iter+1) '.sh'],'w');
-    %    fprintf(fid,'#!/bin/bash\n');
-    %    fprintf(fid,'\n');
-    %    fprintf(fid,['bash /home/marlevi/MIAS_MODELS/MODEL1/fsh/runScripts',num2str(1+iter*4),'.sh\n']);
-    %    fprintf(fid,['bash /home/marlevi/MIAS_MODELS/MODEL1/fsh/runScripts',num2str(2+iter*4),'.sh\n']);
-    %    fprintf(fid,['bash /home/marlevi/MIAS_MODELS/MODEL1/fsh/runScripts',num2str(3+iter*4),'.sh\n']);
-    %    fprintf(fid,['bash /home/marlevi/MIAS_MODELS/MODEL1/fsh/runScripts',num2str(4+iter*4),'.sh\n']);
-    %   fprintf(fid,'\n');
-    %    iter = iter + 1;
-    %end
-    
 end
-
-
 
 ! rm f.tar.gz
 ! tar -czvf f.tar.gz fp fsh fpbs
-
-
-
