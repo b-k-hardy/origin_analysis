@@ -4,3 +4,5 @@
 *.bin
 *.gz
 images*
+!run_origin_analysis_1.5mm.sh
+!run_origin_analysis_batch.sh

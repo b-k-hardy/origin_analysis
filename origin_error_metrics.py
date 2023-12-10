@@ -31,19 +31,16 @@ def main():
 
     # loop through all variations of sensitivity analysis
     for i in range(5):
-        
-        # update user about progress
-        print(f'Iteration {i}')
 
         # create out paths for tables            
-        out_path_RMSE = f'3.0mm_{i}_pressure/RMSE_{i}.csv'
-        out_path_relative_error = f'3.0mm_{i}_pressure/relative_error_{i}.csv'
-
-        # path to ground truth data
-        gt_path = f'3.0mm_{i}_pressure/UM13_0.75mm_60ms_P_CFD_shifted.mat'
+        out_path_RMSE = f'P_STE/{dx}_{i}/RMSE_{dx}_{i}.csv'
+        out_path_relative_error = f'P_STE/{dx}_{i}/relative_error_{dx}_{i}.csv'
 
         # path to error data
-        data_path = f'3.0mm_{i}_pressure/UM13_3.0mm_60ms_P_ERR.mat'
+        data_path = f'P_STE/{dx}_{i}/UM13_{dx}_60ms_P_ERR_{i}.mat'
+
+        # path to ground truth data
+        gt_path = f'P_CFD/{dx}_{i}/UM13_0.75mm_60ms_P_CFD_shifted_{i}.mat'
 
         # LOAD DATA
         # load ground truth data
@@ -98,6 +95,9 @@ def main():
         df_relative_error.iloc[:,-2] = time_val
         df_relative_error.iloc[:,-1] = relative_matrix[np.arange(relative_matrix.shape[0]), max_err_time_idx]
         df_relative_error.to_csv(out_path_relative_error, float_format='%.6f')
+
+        # update user about progress
+        print(f'Iteration {i} Complete')
 
 
 if __name__ == "__main__":
