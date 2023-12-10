@@ -42,9 +42,6 @@ def main():
         # path to ground truth data
         gt_path = f'3.0mm_{i}_pressure/UM13_0.75mm_60ms_P_CFD_shifted.mat'
 
-        # create path for error mask
-        error_mask_path = f'3.0mm_{i}_pressure/UM13_3.0mm_{i}_error_mask.mat'
-
         # path to error data
         data_path = f'3.0mm_{i}_pressure/UM13_3.0mm_60ms_P_ERR.mat'
 
@@ -53,10 +50,6 @@ def main():
         with h5py.File(gt_path, 'r') as f:
             p_cfd = f['P'][:].T
 
-        # load error mask
-        with h5py.File(error_mask_path, 'r') as f:
-            error_mask = f['mask'][:].T.astype(bool)
-
         # allocate rmse matrix. literally just one row (for the one case per dx/dt combo)
         rmse_matrix = np.zeros((1, len(time_60ms)+3))
         relative_matrix = np.zeros((1, len(time_60ms)+3))
@@ -64,6 +57,7 @@ def main():
         # load data
         with h5py.File(data_path, 'r') as f:
             error_map = f['P_ERR'][:].T
+            error_mask = f['mask'][:].T.astype(bool)
 
         # create ground truth matrix
         p_cfd_matrix = p_cfd[error_mask]
