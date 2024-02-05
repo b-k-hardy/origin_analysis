@@ -9,8 +9,8 @@ function run_baseline_estimations_bash(dx, i)
     inlet_path = ['vel_input/', dx, '_' i, '/UM13_', dx, '_inlet.mat'];
     outlet_path = ['vel_input/', dx, '_' i, '/UM13_', dx, '_outlet.mat'];
 
-    out_path = ['P_STE/', dx, '_' i'];
-    out_name = ['UM13_', dx, '_60ms_P_STE_', i];
+    out_path = ['P_PPE/', dx, '_' i'];
+    out_name = ['UM13_', dx, '_60ms_P_PPE_', i];
 
     % Load data without 'popping' unknowns into workspace
     mask = load(mask_path, 'mask');
@@ -22,6 +22,6 @@ function run_baseline_estimations_bash(dx, i)
     outlet = load(outlet_path, 'outlet');
     outlet = outlet.outlet;
 
-    get_ste_pressure_estimate_sequential_baseline(v_path, out_path, out_name, mask, inlet, outlet, [], opts);
+    get_ppe_pressure_estimate_sequential_baseline(v_path, out_path, out_name, mask, inlet, outlet, opts);
 
 end
